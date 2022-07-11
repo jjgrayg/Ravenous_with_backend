@@ -135,4 +135,15 @@ p.tiny-text {
         margin-right: 0;
         margin-bottom: .86rem;
     }
+
+    .SearchBar-location-search {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .Autocomplete-container {
+        margin-right: 0;
+    }
 }
