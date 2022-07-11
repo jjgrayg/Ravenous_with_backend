@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
  
-// Test business for intial state
-
-const apiKey = 'QwEpzyJtBph-tIhKuXuiBwIeqCR_REoM4s8-xMN3GQTmCQKpbxP9hIelCaiGWnTXZITkArdUq3Ii_Gbn6RW3YNexLGDTHpc3_7EDasJR55FlQWrIi08j6FVo_PjGYnYx';
-
 function isEmptyObject(obj){
 	return JSON.stringify(obj) === '{}';
 }
@@ -20,13 +16,7 @@ export const fetchBusinessesWithSearch = createAsyncThunk(
 			url += `&location=${searchObj.location}`;
 		}
 		url += `&sort_by=${searchObj.sortBy}`;
-		const response = await fetch(
-			url,
-			{
-				headers: {
-					Authorization: `Bearer ${apiKey}` 
-				}
-			});
+		const response = await fetch(url);
 		const json = await response.json();
 		if (json.businesses) {
 			const businessArray = json.businesses.map(business => {
