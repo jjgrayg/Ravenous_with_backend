@@ -116,15 +116,7 @@ p.tiny-text {
     text-align: center;
 }
 
-@media only screen and (max-width: 560px) {
-    .SearchBar {
-        background-image: url('./background_search_mobile.jpg');
-    }
-
-    .SearchBar-sort-options ul {
-        margin-left: 2rem;
-        margin-right: 2rem;
-    }
+@media only screen and (max-width: 885px) {
 
     .SearchBar-fields {
         flex-direction: column;
@@ -145,5 +137,22 @@ p.tiny-text {
 
     .Autocomplete-container {
         margin-right: 0;
+    }
+    
+}
+
+@media only screen and (max-width: 560px) {
+    .SearchBar {
+        background-image: url('./background_search_mobile.jpg');
+    }
+
+    .SearchBar-sort-options ul {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .SearchBar-sort-options li {
+        margin-bottom: 10px;
     }
 }

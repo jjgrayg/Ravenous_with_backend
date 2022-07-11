@@ -1,4 +1,7 @@
 /* Universal Styles */
+#root {
+  width: 100%;
+}
 
 html {
   font-size: 18px;
