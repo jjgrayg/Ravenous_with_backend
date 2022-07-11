@@ -18,22 +18,26 @@ export const fetchBusinessesWithSearch = createAsyncThunk(
 		url += `&sort_by=${searchObj.sortBy}`;
 		const response = await fetch(url);
 		const json = await response.json();
+		console.log(json);
 		if (json.businesses) {
 			const businessArray = json.businesses.map(business => {
-				return {
-					imageSrc: business.image_url,
-					address: business.location.address1,
-					city: business.location.city,
-					state: business.location.state,
-					zipCode: business.location.zip_code,
-					category: business.categories[0].title,
-					rating: business.rating,
-					reviewCount: business.review_count,
-					id: business.id,
-					url: business.url,
-					name: business.name
-				};
-			});
+				if (business.image_url && business.location.address1 && business.location.city &&
+					business.location.state && business.location.zip_code && business.categories[0]?.title &&
+					business.rating && business.rating && business.id && business.url && business.name)
+					return {
+						imageSrc: business.image_url,
+						address: business.location.address1,
+						city: business.location.city,
+						state: business.location.state,
+						zipCode: business.location.zip_code,
+						category: business.categories[0]?.title,
+						rating: business.rating,
+						reviewCount: business.rating,
+						id: business.id,
+						url: business.url,
+						name: business.name
+					};
+			}).filter(business => business !== undefined);
 			return businessArray;
 		}
 		return [];
