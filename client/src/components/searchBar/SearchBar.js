@@ -52,6 +52,7 @@ export const SearchBar = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
+		setActive(false);
 		const searchObj = {
 			term,
 			location,

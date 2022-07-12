@@ -32,7 +32,7 @@ export const fetchBusinessesWithSearch = createAsyncThunk(
 						zipCode: business.location.zip_code,
 						category: business.categories[0]?.title,
 						rating: business.rating,
-						reviewCount: business.rating,
+						reviewCount: business.review_count,
 						id: business.id,
 						url: business.url,
 						name: business.name

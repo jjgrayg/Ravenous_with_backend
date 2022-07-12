@@ -1,4 +1,3 @@
-// server/index.js
 const path = require('path');
 const express = require('express');
 const axios = require('axios');
@@ -10,7 +9,6 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-// Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.get("/api/business", async (req, res) => {
@@ -20,20 +18,20 @@ app.get("/api/business", async (req, res) => {
     if (req.query.location) {
         optionalParams += `&location=${req.query.location}`;
     }
-    if (req.query.latitude && req.query.longitude) {
+    else if (req.query.latitude && req.query.longitude) {
         optionalParams += `&latitude=${req.query.latitude}&longitude=${req.query.longitude}`;
     }
-    const yelpRes = await axios({
-        method: 'get',
-        url: baseURL + term + optionalParams,
-        headers: { Authorization: `Bearer ${apiKey}` }
-    });
-    res.json(yelpRes.data);
-});
-
-// All other GET requests not handled before will return our React app
-app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
+    try {
+        const yelpRes = await axios({
+            method: 'get',
+            url: baseURL + term + optionalParams,
+            headers: { Authorization: `Bearer ${apiKey}` }
+        });
+        res.json(yelpRes.data);
+    }
+    catch (err) {
+        console.error(err);
+    }
 });
 
 app.get("/api/autocomplete", async (req, res) => {
@@ -43,14 +41,23 @@ app.get("/api/autocomplete", async (req, res) => {
     if (req.query.latitude && req.query.longitude) {
         optionalParams = `&latitude=${encodeURI(req.query.latitude)}&longitude=${encodeURI(req.query.longitude)}`
     }
-    const yelpRes = await axios({
-        method: 'get',
-        url: baseURL + text + optionalParams,
-        headers: { Authorization: `Bearer ${apiKey}` }
-    });
-    res.json(yelpRes.data);
+    try {
+        const yelpRes = await axios({
+            method: 'get',
+            url: baseURL + text + optionalParams,
+            headers: { Authorization: `Bearer ${apiKey}` }
+        });
+        res.json(yelpRes.data);
+    }
+    catch (err) {
+        console.error(err);
+    }
+});
+
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build', 'index.html'));
 });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+    console.log(`Server listening on ${PORT}`);
 });
