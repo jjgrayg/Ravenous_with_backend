@@ -23,7 +23,7 @@ export const fetchBusinessesWithSearch = createAsyncThunk(
 			const businessArray = json.businesses.map(business => {
 				if (business.image_url && business.location.address1 && business.location.city &&
 					business.location.state && business.location.zip_code && business.categories[0]?.title &&
-					business.rating && business.rating && business.id && business.url && business.name)
+					business.rating && business.rating && business.id && business.url && business.name && !business.is_closed)
 					return {
 						imageSrc: business.image_url,
 						address: business.location.address1,
