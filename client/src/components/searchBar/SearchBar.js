@@ -63,22 +63,47 @@ export const SearchBar = () => {
 	};
 
 	useEffect(() => {
-		const watchID = navigator.geolocation.watchPosition(
-			function(position) {
-				setCompLocation({
-					lat: position.coords.latitude.toFixed(10),
-					lng: position.coords.longitude.toFixed(10),
-					accuracy: position.coords.accuracy
-				});
-				setLocRequired(false);
-			},
-			function(error) {
-				console.error('Error Code = ' + error.code + ' - ' + error.message);
+		try {
+			const watchID = navigator.geolocation.watchPosition(
+				function(position) {
+					setCompLocation({
+						lat: position.coords.latitude.toFixed(10),
+						lng: position.coords.longitude.toFixed(10),
+						accuracy: position.coords.accuracy
+					});
+					setLocRequired(false);
+				},
+				function(error) {
+					console.error('Error Code = ' + error.code + ' - ' + error.message);
+					setLocRequired(true);
+				},
+				{enableHighAccuracy: true} 
+			);
+			return navigator.geolocation.clearWatch(watchID);
+		} 
+		catch (err) {
+			try {
+				navigator.geolocation.getCurrentPosition(
+					function(position) {
+						setCompLocation({
+							lat: position.coords.latitude.toFixed(10),
+							lng: position.coords.longitude.toFixed(10),
+							accuracy: position.coords.accuracy
+						});
+						setLocRequired(false);
+					},
+					function(error) {
+						console.error('Error Code = ' + error.code + ' - ' + error.message);
+						setLocRequired(true);
+					},
+					{enableHighAccuracy: true} 
+				);
+			}
+			catch (err2) {
+				console.log(err2);
 				setLocRequired(true);
-			},
-			{enableHighAccuracy: true} 
-		);
-		return navigator.geolocation.clearWatch(watchID);
+			}
+		}
 	}, []);
 
 	const handleTermChange = e => {
