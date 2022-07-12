@@ -79,7 +79,7 @@ export const SearchBar = () => {
 				},
 				{enableHighAccuracy: true} 
 			);
-			return navigator.geolocation.clearWatch(watchID);
+			return () => navigator.geolocation.clearWatch(watchID);
 		} 
 		catch (err) {
 			try {
