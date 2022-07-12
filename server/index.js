@@ -12,6 +12,7 @@ const app = express();
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.get("/api/business", async (req, res) => {
+    console.dir(`Businesses request from ${req.ip}`);
     const baseURL = 'https://api.yelp.com/v3/businesses/search?term='
     const term = req.query.term;
     let optionalParams = '';
@@ -35,6 +36,7 @@ app.get("/api/business", async (req, res) => {
 });
 
 app.get("/api/autocomplete", async (req, res) => {
+    console.dir(`Autocomplete request from ${req.ip}`);
     const baseURL = 'https://api.yelp.com/v3/autocomplete?text='
     const text = req.query.text;
     let optionalParams = '';
